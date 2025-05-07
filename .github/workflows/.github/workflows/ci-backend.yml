@@ -1,0 +1,35 @@
+name: CI Backend
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build-backend:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: List directory structure
+        run: ls -R  # Esto te ayudará a verificar la estructura
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name: Cache Maven packages
+        uses: actions/cache@v3  # Actualiza a la versión 3
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-m2
+
+      - name: Install dependencies and run tests
+        run: mvn clean install  # Sin especificar un directorio de trabajo
