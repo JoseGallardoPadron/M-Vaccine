@@ -1,4 +1,4 @@
-name: SonarQube
+name: Vaccine
 on:
   push:
     branches:
