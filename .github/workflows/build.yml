@@ -1,4 +1,4 @@
-name: Vaccinee
+name: Vacunas
 on:
   push:
     branches:
