@@ -11,9 +11,9 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 
-@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/vaccines") // Ruta base para el controlador
+@CrossOrigin(origins = "*")
 public class VaccineController {
 
     @Autowired
