@@ -31,7 +31,7 @@ pipeline {
             steps {
                 sh '''
                     mvn test \
-                        -Dtest=ProductServiceTest,SupplierServiceTest,TypeSupplierServiceTest
+                        -Dtest=VaccineControllerTest
                 '''
             }
             post {
