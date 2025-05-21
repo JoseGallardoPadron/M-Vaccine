@@ -5,7 +5,7 @@ pipeline {
         SONARQUBE = 'SonarCloud'  // Nombre del servidor SonarQube configurado en Jenkins
         SONAR_TOKEN = credentials('SONAR_TOKEN')  // Token de SonarCloud como credencial
         PROJECT_KEY = 'JoseGallardoPadron_M-Vaccine'  // Nombre corregido del proyecto en SonarCloud
-        SONAR_ORGANIZATION = 'Jose_Gallardo'  // Organización en SonarCloud
+        SONAR_ORGANIZATION = 'josegallardopadron'  // Organización en SonarCloud
     }
     
     tools {
@@ -16,23 +16,29 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                // Clonar el repositorio y cambiar a la rama 'main'
-                git branch: 'main', url: 'https://github.com/JoseGallardoPadron/M-Vaccine'
+                script {
+                    // Clonar el repositorio y cambiar a la rama 'main'
+                    git branch: 'main', url: 'https://github.com/JoseGallardoPadron/M-Vaccine.git'
+                }
             }
         }
         
         stage('Compile with Maven') {
             steps {
-                sh 'mvn clean compile'
+                script {
+                    sh 'mvn clean compile'
+                }
             }
         }
         
         stage('Run Unit Tests') {
             steps {
-                sh '''
-                    mvn test \
-                        -Dtest=ProductServiceTest,SupplierServiceTest,TypeSupplierServiceTest
-                '''
+                script {
+                    sh '''
+                        mvn test \
+                            -Dtest=VaccineControllerTest
+                    '''
+                }
             }
             post {
                 always {
@@ -52,7 +58,7 @@ pipeline {
                                 -Dsonar.organization=${SONAR_ORGANIZATION} \
                                 -Dsonar.host.url=https://sonarcloud.io \
                                 -Dsonar.login=${SONAR_TOKEN} \
-                                -Dsonar.projectName=Transac_kardex \
+                                -Dsonar.projectName=M-Vaccine \
                                 -Dsonar.qualitygate.wait=true \
                                 -Dsonar.scanner.force=true \
                                 -Dsonar.scm.disabled=true \
@@ -66,7 +72,9 @@ pipeline {
         
         stage('Generate .jar Artifact') {
             steps {
-                sh 'mvn package -DskipTests'
+                script {
+                    sh 'mvn package -DskipTests'
+                }
             }
             post {
                 always {
@@ -79,8 +87,10 @@ pipeline {
     
     post {
         always {
-            // Limpiar workspace después de cada build
-            cleanWs()
+            script {
+                // Limpiar workspace después de cada build
+                cleanWs()
+            }
         }
         success {
             echo 'Build completado exitosamente!'
