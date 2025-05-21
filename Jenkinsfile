@@ -36,7 +36,7 @@ pipeline {
                 script {
                     sh '''
                         mvn test \
-                            -Dtest=VaccineControllerTest
+                            -Dtest=VaccineApplicationTests
                     '''
                 }
             }
