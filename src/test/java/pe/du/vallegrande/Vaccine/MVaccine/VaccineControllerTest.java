@@ -73,8 +73,15 @@ void deactivateVaccine_ShouldReturnDeactivatedVaccine() {
 // Prueba para activar una vacuna
 @Test
 void activateVaccine_ShouldReturnActivatedVaccine() {
-    vaccine.setActive("I"); // Cambia el estado a inactivo para simular la activación
-    when(vaccineServices.activateVaccine(1L)).thenReturn(Mono.just(vaccine)); // Simular el servicio
+    // Cambia el estado a inactivo para simular la activación
+    vaccine.setActive("I");
+    
+    // Simular el servicio y devolver una copia del objeto con el estado "A"
+    VaccineModel activatedVaccine = new VaccineModel();
+    activatedVaccine.setVaccine_id(vaccine.getVaccine_id());
+    activatedVaccine.setActive("A");
+    
+    when(vaccineServices.activateVaccine(1L)).thenReturn(Mono.just(activatedVaccine)); // Simular el servicio
 
     Mono<ResponseEntity<VaccineModel>> response = vaccineController.activateVaccine(1L);
 
