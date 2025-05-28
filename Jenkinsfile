@@ -31,22 +31,21 @@ pipeline {
             }
         }
         
-        stage('Run Unit Tests') {
-            steps {
-                script {
-                    sh '''
-                        mvn test \
-                            -Dtest=VaccineApplicationTests
-                    '''
-                }
-            }
-            post {
-                always {
-                    // Publicar resultados de pruebas
-                    junit testResults: 'target/surefire-reports/*.xml'
-                }
-            }
+      stage('Run Unit Tests') {
+    steps {
+        script {
+            sh '''
+                mvn test
+            '''
         }
+    }
+    post {
+        always {
+            // Publicar resultados de pruebas
+            junit testResults: 'target/surefire-reports/*.xml'
+        }
+    }
+}
         
         stage('SonarQube Analysis') {
             steps {

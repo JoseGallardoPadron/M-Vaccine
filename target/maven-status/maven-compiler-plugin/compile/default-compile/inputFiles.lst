@@ -1,6 +1,6 @@
-/workspace/vacunas/src/main/java/pe/du/vallegrande/Vaccine/VaccineApplication.java
-/workspace/vacunas/src/main/java/pe/du/vallegrande/Vaccine/config/CorsConfig.java
-/workspace/vacunas/src/main/java/pe/du/vallegrande/Vaccine/controller/VaccineController.java
-/workspace/vacunas/src/main/java/pe/du/vallegrande/Vaccine/model/VaccineModel.java
-/workspace/vacunas/src/main/java/pe/du/vallegrande/Vaccine/repository/VaccineRepository.java
-/workspace/vacunas/src/main/java/pe/du/vallegrande/Vaccine/service/VaccineServices.java
+/workspace/M-Vaccine/src/main/java/pe/du/vallegrande/Vaccine/VaccineApplication.java
+/workspace/M-Vaccine/src/main/java/pe/du/vallegrande/Vaccine/config/CorsConfig.java
+/workspace/M-Vaccine/src/main/java/pe/du/vallegrande/Vaccine/controller/VaccineController.java
+/workspace/M-Vaccine/src/main/java/pe/du/vallegrande/Vaccine/model/VaccineModel.java
+/workspace/M-Vaccine/src/main/java/pe/du/vallegrande/Vaccine/repository/VaccineRepository.java
+/workspace/M-Vaccine/src/main/java/pe/du/vallegrande/Vaccine/service/VaccineServices.java
