@@ -7,6 +7,7 @@ pipeline {
         PROJECT_KEY = 'JoseGallardoPadron_M-Vaccine'  // Nombre corregido del proyecto en SonarCloud
         SONAR_ORGANIZATION = 'josegallardopadron'  // Organización en SonarCloud
     }
+
     
     tools {
         maven 'Maven 3.8.1'  // Maven configurado en Jenkins
