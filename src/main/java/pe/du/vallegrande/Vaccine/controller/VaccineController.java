@@ -82,6 +82,7 @@ public class VaccineController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
+<<<<<<< HEAD
     // Activar vacuna - Solo ADMIN
     @PatchMapping("/activate/{id}")
     @PreAuthorize("hasRole('ADMIN')")
@@ -90,4 +91,14 @@ public class VaccineController {
                 .map(activatedVaccine -> ResponseEntity.ok(activatedVaccine))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
+=======
+ // Activar (revertir a activo) una vacuna
+ @PatchMapping("/activate/{id}") // Método PATCH para actualizar parcialmente
+public Mono<ResponseEntity<VaccineModel>> activateVaccine(@PathVariable Long id) {
+     return vaccineServices.activateVaccine(id) // Llamada al servicio que cambia el estado
+             .map(activatedVaccine -> ResponseEntity.ok(activatedVaccine)) // Retorna la vacuna con estado "A"
+             .defaultIfEmpty(ResponseEntity.notFound().build()); // Si no se encuentra la vacuna, retorna Not Found
+}
+
+>>>>>>> 53e93535f37b58b02be10ede41a1e80a8a95d07e
 }

@@ -21,39 +21,61 @@
     </properties>
 
     <dependencies>
+<<<<<<< HEAD
         <!-- Dependencia para WebFlux -->
+=======
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-r2dbc</artifactId>
+        </dependency>
+
+>>>>>>> 53e93535f37b58b02be10ede41a1e80a8a95d07e
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-webflux</artifactId>
         </dependency>
 
+<<<<<<< HEAD
         <!-- Herramientas para desarrollo -->
+=======
+        <dependency>
+            <groupId>org.springdoc</groupId>
+            <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
+            <version>2.5.0</version> 
+        </dependency>
+
+>>>>>>> 53e93535f37b58b02be10ede41a1e80a8a95d07e
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
+
         <dependency>
           <groupId>junit</groupId>
           <artifactId>junit</artifactId>
           <version>4.13.2</version>
         </dependency>
+
         <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-core</artifactId>
             <version>5.3.1</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>io.projectreactor</groupId>
             <artifactId>reactor-test</artifactId>
             <version>3.5.3</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter</artifactId>
+<<<<<<< HEAD
             <version>5.9.2</version>
             <scope>test</scope>
         </dependency>
@@ -79,6 +101,12 @@
         </dependency>
 
         <!-- Dependencia para OpenAPI con WebFlux -->
+=======
+            <version>5.7.0</version>
+            <scope>test</scope>
+        </dependency>
+
+>>>>>>> 53e93535f37b58b02be10ede41a1e80a8a95d07e
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webflux-ui</artifactId>
@@ -98,6 +126,7 @@
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
+<<<<<<< HEAD
         <!-- Spring Security -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -123,6 +152,14 @@
             <scope>runtime</scope>
         </dependency>
 
+=======
+
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>r2dbc-postgresql</artifactId>
+            <scope>runtime</scope>
+        </dependency>
+>>>>>>> 53e93535f37b58b02be10ede41a1e80a8a95d07e
     </dependencies>
 
     <build>

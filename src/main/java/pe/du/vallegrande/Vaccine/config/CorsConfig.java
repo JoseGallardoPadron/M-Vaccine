@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 package pe.du.vallegrande.Vaccine.config;
+=======
+package pe.edu.vallegrande.Vaccine.config;
+>>>>>>> 53e93535f37b58b02be10ede41a1e80a8a95d07e
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

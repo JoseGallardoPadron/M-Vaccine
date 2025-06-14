@@ -7,6 +7,7 @@ pipeline {
         PROJECT_KEY = 'JoseGallardoPadron_M-Vaccine'  // Nombre corregido del proyecto en SonarCloud
         SONAR_ORGANIZATION = 'josegallardopadron'  // Organización en SonarCloud
     }
+
     
     tools {
         maven 'Maven 3.8.1'  // Maven configurado en Jenkins
@@ -31,22 +32,21 @@ pipeline {
             }
         }
         
-        stage('Run Unit Tests') {
-            steps {
-                script {
-                    sh '''
-                        mvn test \
-                            -Dtest=VaccineApplicationTests
-                    '''
-                }
-            }
-            post {
-                always {
-                    // Publicar resultados de pruebas
-                    junit testResults: 'target/surefire-reports/*.xml'
-                }
-            }
+      stage('Run Unit Tests') {
+    steps {
+        script {
+            sh '''
+                mvn test
+            '''
         }
+    }
+    post {
+        always {
+            // Publicar resultados de pruebas
+            junit testResults: 'target/surefire-reports/*.xml'
+        }
+    }
+}
         
         stage('SonarQube Analysis') {
             steps {
