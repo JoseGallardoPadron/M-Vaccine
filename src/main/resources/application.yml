@@ -10,3 +10,10 @@ spring:
     username: postgres.czvijwwwsheijovdvwci
     password: cXZzyYANPji9OE8v
 
+
+# Propiedades personalizadas - DEBEN estar en el nivel raíz
+jwt:
+  secret: mySecretKey123456789012345678901234567890 # Debe ser la misma que el servicio de autenticación
+
+auth-service:
+  url: https://8085-vallegrandea-mssecurity-oirp2ljshek.ws-us120.gitpod.io

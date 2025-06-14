@@ -3,6 +3,7 @@ package pe.du.vallegrande.Vaccine.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import pe.du.vallegrande.Vaccine.model.VaccineModel;
 import pe.du.vallegrande.Vaccine.repository.VaccineRepository;
@@ -10,73 +11,83 @@ import pe.du.vallegrande.Vaccine.service.VaccineServices;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-
 @RestController
-@RequestMapping("/vaccines") // Ruta base para el controlador
+@RequestMapping("/vaccines")
 @CrossOrigin(origins = "*")
 public class VaccineController {
 
     @Autowired
     private VaccineRepository vaccineRepository;
 
-
     @Autowired
-    private VaccineServices vaccineServices; // Inyecta el servicio
+    private VaccineServices vaccineServices;
 
-    // Crear las Vacunas
+    // Crear vacunas - Solo ADMIN
     @PostMapping("/create")
+    @PreAuthorize("hasRole('ADMIN')")
     public Mono<ResponseEntity<VaccineModel>> createVaccine(@RequestBody VaccineModel vaccine) {
-        // Asegúrate de que el id no esté presente al crear una nueva vacuna
-        vaccine.setVaccine_id(null); // O asegurarte de que el id sea null antes de guardar
+        vaccine.setVaccine_id(null);
         return vaccineRepository.save(vaccine)
                 .map(savedVaccine -> ResponseEntity.status(HttpStatus.CREATED).body(savedVaccine))
                 .defaultIfEmpty(ResponseEntity.status(HttpStatus.BAD_REQUEST).build());
     }
 
-    // Listar todas las vacunas
+    // Listar todas las vacunas - USER y ADMIN
     @GetMapping
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Flux<VaccineModel> getAllVaccines() {
         return vaccineRepository.findAll();
     }
 
-  // Listar solo las vacunas inactivas (cambia la URL para evitar ambigüedad)
-@GetMapping("/inactive")
-public Flux<VaccineModel> getInactiveVaccines() {
-    return vaccineRepository.findAll()
-              .filter(vaccine -> "I".equals(vaccine.getActive())); // Filtra las vacunas inactivas
-}
+    // Listar vacunas inactivas - Solo ADMIN (información sensible)
+    @GetMapping("/inactive")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Flux<VaccineModel> getInactiveVaccines() {
+        return vaccineRepository.findAll()
+                .filter(vaccine -> "I".equals(vaccine.getActive()));
+    }
 
-    // Obtener una vacuna por ID
+    // Listar vacunas activas - USER y ADMIN
+    @GetMapping("/active")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
+    public Flux<VaccineModel> getActiveVaccines() {
+        return vaccineServices.getActiveVaccines();
+    }
+
+    // Obtener vacuna por ID - USER y ADMIN
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
     public Mono<ResponseEntity<VaccineModel>> getVaccineById(@PathVariable Long id) {
         return vaccineRepository.findById(id)
                 .map(vaccine -> ResponseEntity.ok(vaccine))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-    // Actualizar una vacuna
+    // Actualizar vacuna - Solo ADMIN
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Mono<ResponseEntity<VaccineModel>> updateVaccine(@PathVariable Long id, @RequestBody VaccineModel vaccine) {
-        vaccine.setVaccine_id(id); // Asegúrate de que el ID sea el correcto
+        vaccine.setVaccine_id(id);
         return vaccineRepository.save(vaccine)
                 .map(updatedVaccine -> ResponseEntity.ok(updatedVaccine))
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
-   // Eliminar (inactivar) una vacuna
+    // Eliminar (inactivar) vacuna - Solo ADMIN
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
     public Mono<ResponseEntity<VaccineModel>> deactivateVaccine(@PathVariable Long id) {
-    return vaccineServices.deactivateVaccine(id) // Llamada al servicio que cambia el estado
-            .map(deactivatedVaccine -> ResponseEntity.ok(deactivatedVaccine)) // Retorna la vacuna con estado "I"
-            .defaultIfEmpty(ResponseEntity.notFound().build()); // Si no se encuentra la vacuna, retorna Not Found
-}
+        return vaccineServices.deactivateVaccine(id)
+                .map(deactivatedVaccine -> ResponseEntity.ok(deactivatedVaccine))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
 
- // Activar (revertir a activo) una vacuna
- @PatchMapping("/activate/{id}") // Método PATCH para actualizar parcialmente
-public Mono<ResponseEntity<VaccineModel>> activateVaccine(@PathVariable Long id) {
-     return vaccineServices.activateVaccine(id) // Llamada al servicio que cambia el estado
-             .map(activatedVaccine -> ResponseEntity.ok(activatedVaccine)) // Retorna la vacuna con estado "A"
-             .defaultIfEmpty(ResponseEntity.notFound().build()); // Si no se encuentra la vacuna, retorna Not Found
-}
-
+    // Activar vacuna - Solo ADMIN
+    @PatchMapping("/activate/{id}")
+    @PreAuthorize("hasRole('ADMIN')")
+    public Mono<ResponseEntity<VaccineModel>> activateVaccine(@PathVariable Long id) {
+        return vaccineServices.activateVaccine(id)
+                .map(activatedVaccine -> ResponseEntity.ok(activatedVaccine))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
 }
